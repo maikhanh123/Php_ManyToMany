@@ -32,10 +32,14 @@ Route::get('user/{id}/createRole', function ($id) {
 
 });
 
-Route::get('read', function () {
+Route::get('read', function () { 
     $users = \App\User::get();
 
 //   dd($users) ;
+    // foreach($users->roles as $role) {
+    //     echo $role->name;
+    // }
+
     foreach ($users as $user) {
         $name = $user->name;
         $roleName = '';
@@ -49,17 +53,24 @@ Route::get('read', function () {
         }
         echo $name . ' have role is: ' . $roleName . '</br>';
     }
+
+    
 });
 
 Route::get('update/{id}', function ($id) {
      $user = \App\User::findOrFail($id);
-//     dd($user->roles);
+    dd($user->roles);
      foreach ($user->roles as $role) {
 //         dd ($role->pivot->role_id);
          if($role->pivot->role_id == 2) {
              $role->pivot->role_id = 1;
              $role->pivot->save();
          }
+
+        //  if($role->name =="Administrator") {
+        //      $role->name = 'abc';
+        //      $role->save();
+        //  }
      }
 });
 
